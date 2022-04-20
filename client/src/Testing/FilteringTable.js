@@ -1,12 +1,11 @@
 import React, { useMemo } from 'react'
-
-//import table utilities here
-import { useTable, useSortBy } from 'react-table'
+import { useTable, useGlobalFilter, useFilters } from 'react-table'
 import MOCK_DATA from './MOCK_DATA.json'
-import { COLUMNS } from './columns'
+import { COLUMNS } from '../Testing/columns'
 import './table.css'
+import { GlobalFilter } from './GlobalFilter'
 
-export const SortingTable = () => {
+export const FilteringTable = () => {
 
     //Empty dependency array
     //Ensure data is not recreated every render by using this hook
@@ -30,13 +29,17 @@ export const SortingTable = () => {
         headerGroups, //Column heading information, each belongs to own header
         rows, 
         prepareRow,
+        state, //Several properites, just need globalfilter
+        setGlobalFilter,
     } = useTable({
         columns,
         data,
-    },
-    //Adding sorting feature
-    useSortBy)
+    }, 
+    useFilters,
+    useGlobalFilter
+    )
 
+    const { globalFilter } = state
     //Define a basic table structure using HTML
 
     //thead = table head group
@@ -44,19 +47,22 @@ export const SortingTable = () => {
     //th = table header cell 
     //td = table data
     return (
+
+        <>
+        <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
+
         <table { ...getTableProps()}>
-            {/* The table header*/}
             <thead>
                 { 
+                
                     headerGroups.map((headerGroup) => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
                         { 
                             headerGroup.headers.map( column => (
-                                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                                    {column.render('Header')}
-                                    <span>
-                                        {column.isSorted ? (column.isSortedDesc ? ' desc' : ' asc') : ''}
-                                    </span>
+                                <th {...column.getHeaderProps()}>{column.render('Header')}
+                                    <div>
+                                        {column.canFilter ? column.render('Filter') : null}
+                                    </div>
                                 </th>
                             ))}
                      </tr>
@@ -80,5 +86,6 @@ export const SortingTable = () => {
                 }
             </tbody>
         </table>
+        </>
     )
 }

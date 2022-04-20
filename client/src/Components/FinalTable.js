@@ -27,14 +27,14 @@ export const FinalTable = () => {
         getTableProps, //Needs to be destructured on table tag
         getTableBodyProps, //destructured on tbody
         headerGroups, //Column heading information, each belongs to own header
-        page,
-        nextPage,
+        page, //each page for pagination
+        nextPage, //The next page to be loaded
         previousPage,
         canNextPage, //Boolean properties, indicate wheter the next page is avaiable
         canPreviousPage,
         pageOptions,  
         prepareRow,
-        state, //Several properites, just need globalfilter
+        state, //Several properites, just need globalfilter and page index
         setGlobalFilter,
     } = useTable({
         columns,
@@ -56,12 +56,12 @@ export const FinalTable = () => {
     //td = table data
     return (
         <>
-        <div class = "column">
-            <div class = "row">
+        <div className = "column">
+            <div className = "row">
             <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
             </div>
         
-            <div class = "row">
+            <div className = "row">
         <table { ...getTableProps()}>
             <thead>
                 {

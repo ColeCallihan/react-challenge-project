@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react'
-import { useTable, useGlobalFilter, useFilters } from 'react-table'
+import { useTable, usePagination } from 'react-table'
 import MOCK_DATA from './MOCK_DATA.json'
-import { COLUMNS } from './columns'
+import { COLUMNS } from '../Testing/columns'
 import './table.css'
-import { GlobalFilter } from './GlobalFilter'
 
-export const FilteringTable = () => {
+export const PaginationTable = () => {
 
     //Empty dependency array
     //Ensure data is not recreated every render by using this hook
@@ -27,19 +26,24 @@ export const FilteringTable = () => {
         getTableProps, //Needs to be destructured on table tag
         getTableBodyProps, //destructured on tbody
         headerGroups, //Column heading information, each belongs to own header
-        rows, 
+        page, 
+        nextPage, //Navigate across different pages
+        previousPage,
+        canNextPage, //Boolean properties, indicate wheter the next page is avaiable
+        canPreviousPage,
+        pageOptions, 
+        state,
         prepareRow,
-        state, //Several properites, just need globalfilter
-        setGlobalFilter,
-    } = useTable({
-        columns,
-        data,
-    }, 
-    useFilters,
-    useGlobalFilter
+    } = useTable(
+        {
+            columns,
+            data,
+        },
+        usePagination
     )
 
-    const { globalFilter } = state
+    const { pageIndex } = state;
+
     //Define a basic table structure using HTML
 
     //thead = table head group
@@ -47,11 +51,9 @@ export const FilteringTable = () => {
     //th = table header cell 
     //td = table data
     return (
-
         <>
-        <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
-
         <table { ...getTableProps()}>
+            {/* The table header*/}
             <thead>
                 { 
                 
@@ -59,18 +61,14 @@ export const FilteringTable = () => {
                     <tr {...headerGroup.getHeaderGroupProps()}>
                         { 
                             headerGroup.headers.map( column => (
-                                <th {...column.getHeaderProps()}>{column.render('Header')}
-                                    <div>
-                                        {column.canFilter ? column.render('Filter') : null}
-                                    </div>
-                                </th>
+                                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
                             ))}
                      </tr>
                     ))}
             </thead>
             <tbody {...getTableBodyProps()}>
                 {
-                    rows.map(row => {
+                    page.map(row => {
                         prepareRow(row)
                         return (
                             <tr {...row.getRowProps()}>
@@ -86,6 +84,15 @@ export const FilteringTable = () => {
                 }
             </tbody>
         </table>
+        <div>
+            <span>
+                Page{' '}
+                <strong>{pageIndex+1} of {pageOptions.length}</strong>
+                {' '}
+            </span>
+            <button onClick={() => previousPage()} disabled = {!canPreviousPage}>Previous</button>
+            <button onClick={() => nextPage()} disabled = {!canNextPage}>Next</button>
+        </div>
         </>
     )
 }

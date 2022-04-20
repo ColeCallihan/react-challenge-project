@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
+import React, { useState } from 'react';
 import axios from 'axios';
-import PersonList from './Components/PersonList';
-import { BasicTable } from './Components/BasicTable'
-import { SortingTable } from './Components/SortingTable'
-import { FilteringTable } from './Components/FilteringTable';
+import './App.css';
 import { FinalTable } from './Components/FinalTable';
-import { PaginationTable } from './Components/PaginationTable';
 
-//Retrieve data from localhost:3001/companies using Axioa
+//Retrieve data from localhost:3001/companies using Axios
 //Axios: Promise-based http request API
 //Create a table with columns: name, city, state, phone number, products
 //Make table sortable by alphabetical order
@@ -17,71 +12,29 @@ import { PaginationTable } from './Components/PaginationTable';
 //Make it presentable
 
 function App() {
+
+  const [quote, setQuote] = useState('')
+  //Using Axios to dynamically grab data
+  const getQuote = () => {
+  axios.get('http://localhost:3001/companies')
+    .then(response => {
+      //Logging the response
+      console.log(response);
+      //Using a function to send it to variable "quote"
+      setQuote(response.data);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
+
   return (
     <div className="App">
       <FinalTable />
+      <button onClick={getQuote}>Grab Data</button>
+      { quote && <p>{quote}</p>}
     </div>
   );
 }
 
 export default App;
-
-//Testing code
-
-/*
-   //get data from API
-
-  const [notes, getNotes] = useState('');
- 
-  const url = 'http://localhost:3001/';
-
-  useEffect(() => {
-    getAllData();
-  }, []);
-
-  const getAllData = () => {
-
-    axios.get('${url}')
-
-    .then((response) => {
-      const allNotes = response.data;
-      getNotes(allNotes);
-    })
-    .catch(error => console.error('Error: ${error}'));
-  }
-  //return(<NoteTimeline notes ={notes})
-
- Old header with logo and how to learn react
- <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-
-
-
-  //Populate data into the Table
-
-
-  {data.map((val, key) => {
-          return (
-          <tr key={key}>
-            <td>{val.name}</td>
-            <td>{val.age}</td>
-            <td>{val.gender}</td>
-          </tr>
-          )
-        })}
-
-
-  making a person list from a GET axiom request
-  <PersonList />
-  */

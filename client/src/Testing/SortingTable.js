@@ -1,10 +1,12 @@
 import React, { useMemo } from 'react'
-import { useTable, usePagination } from 'react-table'
+
+//import table utilities here
+import { useTable, useSortBy } from 'react-table'
 import MOCK_DATA from './MOCK_DATA.json'
-import { COLUMNS } from './columns'
+import { COLUMNS } from '../Testing/columns'
 import './table.css'
 
-export const PaginationTable = () => {
+export const SortingTable = () => {
 
     //Empty dependency array
     //Ensure data is not recreated every render by using this hook
@@ -26,23 +28,14 @@ export const PaginationTable = () => {
         getTableProps, //Needs to be destructured on table tag
         getTableBodyProps, //destructured on tbody
         headerGroups, //Column heading information, each belongs to own header
-        page, 
-        nextPage, //Navigate across different pages
-        previousPage,
-        canNextPage, //Boolean properties, indicate wheter the next page is avaiable
-        canPreviousPage,
-        pageOptions, 
-        state,
+        rows, 
         prepareRow,
-    } = useTable(
-        {
-            columns,
-            data,
-        },
-        usePagination
-    )
-
-    const { pageIndex } = state;
+    } = useTable({
+        columns,
+        data,
+    },
+    //Adding sorting feature
+    useSortBy)
 
     //Define a basic table structure using HTML
 
@@ -51,24 +44,27 @@ export const PaginationTable = () => {
     //th = table header cell 
     //td = table data
     return (
-        <>
         <table { ...getTableProps()}>
             {/* The table header*/}
             <thead>
                 { 
-                
                     headerGroups.map((headerGroup) => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
                         { 
                             headerGroup.headers.map( column => (
-                                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                                    {column.render('Header')}
+                                    <span>
+                                        {column.isSorted ? (column.isSortedDesc ? ' desc' : ' asc') : ''}
+                                    </span>
+                                </th>
                             ))}
                      </tr>
                     ))}
             </thead>
             <tbody {...getTableBodyProps()}>
                 {
-                    page.map(row => {
+                    rows.map(row => {
                         prepareRow(row)
                         return (
                             <tr {...row.getRowProps()}>
@@ -84,15 +80,5 @@ export const PaginationTable = () => {
                 }
             </tbody>
         </table>
-        <div>
-            <span>
-                Page{' '}
-                <strong>{pageIndex+1} of {pageOptions.length}</strong>
-                {' '}
-            </span>
-            <button onClick={() => previousPage()} disabled = {!canPreviousPage}>Previous</button>
-            <button onClick={() => nextPage()} disabled = {!canNextPage}>Next</button>
-        </div>
-        </>
     )
 }

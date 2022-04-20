@@ -1,0 +1,107 @@
+//Testing code
+
+/*
+   //get data from API
+
+  const [notes, getNotes] = useState('');
+ 
+  const url = 'http://localhost:3001/';
+
+  useEffect(() => {
+    getAllData();
+  }, []);
+
+  const getAllData = () => {
+
+    axios.get('${url}')
+
+    .then((response) => {
+      const allNotes = response.data;
+      getNotes(allNotes);
+    })
+    .catch(error => console.error('Error: ${error}'));
+  }
+  //return(<NoteTimeline notes ={notes})
+
+ Old header with logo and how to learn react
+ <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Edit <code>src/App.tsx</code> and save to reload.
+        </p>
+        <a
+          className="App-link"
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+
+
+
+  //Populate data into the Table
+
+
+  {data.map((val, key) => {
+          return (
+          <tr key={key}>
+            <td>{val.name}</td>
+            <td>{val.age}</td>
+            <td>{val.gender}</td>
+          </tr>
+          )
+        })}
+
+
+  making a person list from a GET axiom request
+  <PersonList />
+  */
+
+  
+/*
+table {
+  border: 2px solid forestgreen;
+  width: 800px;
+  height: 200px;
+}
+
+th {
+  border-bottom: 1px solid black;
+}
+
+td {
+  text-align: center;
+}
+
+ app logo sizing
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+
+/* Logo spinning animation
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+*/
+
+/* app link color softer blue
+.App-link {
+  color: #61dafb;
+}
+*/
+
+/* telling animation how to spin
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+*/

@@ -1,5 +1,5 @@
 //Can pick and choose what data to render in the UI
-import { ColumnFilter } from './ColumnFilter'
+import { ColumnFilter } from '../Components/ColumnFilter'
 
 //Should search for name city or product
 export const COLUMNS = [
