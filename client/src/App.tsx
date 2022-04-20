@@ -6,6 +6,7 @@ import { BasicTable } from './Components/BasicTable'
 import { SortingTable } from './Components/SortingTable'
 import { FilteringTable } from './Components/FilteringTable';
 import { FinalTable } from './Components/FinalTable';
+import { PaginationTable } from './Components/PaginationTable';
 
 //Retrieve data from localhost:3001/companies using Axioa
 //Axios: Promise-based http request API

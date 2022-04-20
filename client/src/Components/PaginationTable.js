@@ -1,16 +1,15 @@
 import React, { useMemo } from 'react'
-import { useTable, useGlobalFilter, useFilters, useSortBy, usePagination} from 'react-table'
-import { COLUMNSFINAL } from './columnsFinal'
+import { useTable, usePagination } from 'react-table'
+import MOCK_DATA from './MOCK_DATA.json'
+import { COLUMNS } from './columns'
 import './table.css'
-import { GlobalFilter } from './GlobalFilter'
-import DATA from './data.json'
 
-export const FinalTable = () => {
+export const PaginationTable = () => {
 
     //Empty dependency array
     //Ensure data is not recreated every render by using this hook
-    const columns = useMemo(() => COLUMNSFINAL, [])
-    const data = useMemo(() => DATA, [])
+    const columns = useMemo(() => COLUMNS, [])
+    const data = useMemo(() => MOCK_DATA, [])
 
     //Use table hook, needs useMemo
     //Shorthand syntax columns: columns
@@ -27,27 +26,24 @@ export const FinalTable = () => {
         getTableProps, //Needs to be destructured on table tag
         getTableBodyProps, //destructured on tbody
         headerGroups, //Column heading information, each belongs to own header
-        page,
-        nextPage,
+        page, 
+        nextPage, //Navigate across different pages
         previousPage,
         canNextPage, //Boolean properties, indicate wheter the next page is avaiable
         canPreviousPage,
-        pageOptions,  
+        pageOptions, 
+        state,
         prepareRow,
-        state, //Several properites, just need globalfilter
-        setGlobalFilter,
-    } = useTable({
-        columns,
-        data,
-    }, 
-    useFilters,
-    useGlobalFilter,
-    useSortBy,
-    usePagination
+    } = useTable(
+        {
+            columns,
+            data,
+        },
+        usePagination
     )
 
-    const { globalFilter } = state
     const { pageIndex } = state;
+
     //Define a basic table structure using HTML
 
     //thead = table head group
@@ -56,28 +52,16 @@ export const FinalTable = () => {
     //td = table data
     return (
         <>
-        <div class = "column">
-            <div class = "row">
-            <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter}/>
-            </div>
-        
-            <div class = "row">
         <table { ...getTableProps()}>
+            {/* The table header*/}
             <thead>
-                {
+                { 
+                
                     headerGroups.map((headerGroup) => (
                     <tr {...headerGroup.getHeaderGroupProps()}>
                         { 
                             headerGroup.headers.map( column => (
-                                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                                    {column.render('Header')}
-                                    <span>
-                                        {column.isSorted ? (column.isSortedDesc ? ' desc' : ' arrow up') : ''}
-                                    </span>
-                                    <div>
-                                        {column.canFilter ? column.render('Filter') : null}
-                                    </div>
-                                </th>
+                                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
                             ))}
                      </tr>
                     ))}
@@ -99,9 +83,7 @@ export const FinalTable = () => {
                     })
                 }
             </tbody>
-            </table>
-            </div>
-        </div>
+        </table>
         <div>
             <span>
                 Page{' '}
