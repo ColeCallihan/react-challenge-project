@@ -3,10 +3,23 @@
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+/*
 table {
   border: 2px solid forestgreen;
   width: 800px;
@@ -21,12 +34,12 @@ td {
   text-align: center;
 }
 
-/* app logo sizing
+ app logo sizing
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
-/*
+
 
 /* Logo spinning animation
 @media (prefers-reduced-motion: no-preference) {
@@ -35,17 +48,6 @@ td {
   }
 }
 */
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
 
 /* app link color softer blue
 .App-link {

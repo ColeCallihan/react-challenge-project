@@ -1,23 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
-import TableData from './';
+import PersonList from './Components/PersonList';
+import { BasicTable } from './Components/BasicTable'
+import { SortingTable } from './Components/SortingTable'
+import { FilteringTable } from './Components/FilteringTable';
+import { FinalTable } from './Components/FinalTable';
 
-//Retrieve data from localhost:3001/companies using Axiom
+//Retrieve data from localhost:3001/companies using Axioa
+//Axios: Promise-based http request API
 //Create a table with columns: name, city, state, phone number, products
 //Make table sortable by alphabetical order
 //Add filters for state and products
 //Text search for name, city, or product
 //Make it presentable
 
-const data = [
-  { name: "Joe" },
-  { name: "Cole" },
-  { name: "Jane" }
-];
-
 function App() {
+  return (
+    <div className="App">
+      <FinalTable />
+    </div>
+  );
+}
+
+export default App;
+
+//Testing code
+
+/*
    //get data from API
 
   const [notes, getNotes] = useState('');
@@ -40,7 +50,7 @@ function App() {
   }
   //return(<NoteTimeline notes ={notes})
 
- /* Old header with logo and how to learn react
+ Old header with logo and how to learn react
  <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -54,11 +64,11 @@ function App() {
         >
           Learn React
         </a>
- */
+
 
 
   //Populate data into the Table
-  /* 
+
 
   {data.map((val, key) => {
           return (
@@ -69,22 +79,8 @@ function App() {
           </tr>
           )
         })}
+
+
+  making a person list from a GET axiom request
+  <PersonList />
   */
-
-  return (
-    <div className="App">
-      <table>
-        <tr>
-          <th>Name</th>
-          <th>City</th>
-          <th>State</th>
-          <th>Phone Number</th>
-          <th>Products</th>
-        </tr>
-        <TableData/>
-      </table>
-    </div>
-  );
-}
-
-export default App;
