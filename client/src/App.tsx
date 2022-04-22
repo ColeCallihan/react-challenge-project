@@ -14,7 +14,7 @@ import { FinalTable } from './Components/FinalTable';
 //Access to XMLHttpRequest at 'http://localhost:3001/companies' from origin 'http://localhost:3000' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
 //Final error to figure out
 
-//AsyncAwait
+//AsyncAwait for promise based
 
 const { useEffect, useState } = React;
 
@@ -25,7 +25,7 @@ function App() {
 
   //Using Axios to dynamically grab data
   const getData = () => {
-  axios.get('http://localhost:3001/companies')
+  return axios.get('http://localhost:3001/companies')
     .then(({data}) => {
       //Logging the response
       console.log(data);
@@ -38,7 +38,7 @@ function App() {
   }
 
   useEffect(() => {
-    //Mimics component did mount 
+    //Mimics componentDidMount() 
     getData().then(userData => {
       setUserData(userData || 'No user data');
     })

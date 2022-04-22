@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react'
+//Questionable import. React-Table is utility full of hooks, not a component
 import { useTable, useGlobalFilter, useFilters, useSortBy, usePagination} from 'react-table'
 import { COLUMNSFINAL } from './columnsFinal'
 import './table.css'

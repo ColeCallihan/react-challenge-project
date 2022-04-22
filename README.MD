@@ -36,4 +36,10 @@ To make it easier to provide all files both the client and server are provided i
 Pay close attention to which directory you are in when running commands for setup and project start.
 
 ## Questions for the team
-1. 
+1. Do you mainly use Axios for API calls?
+2. Do you mostly write your own components and add them to exisiting React code?
+3. Do you mostly peer program or just work on things solo?
+4. What was the first languages you have learned and how easy/hard was it for you to learn JS/HTML/React?
+5. What are some other React extensions you guys use in your day-to-day coding?
+6. How would I implement something like a GPS API call and display that to a user?
+7. Is react-table considered a library or a utility?
